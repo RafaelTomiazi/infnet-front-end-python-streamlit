@@ -164,18 +164,20 @@ if st.checkbox("Filtrar por faixa de visitantes (Total)", key="usar_faixa"):
     df_filtrado = df_filtrado[(df_filtrado["Total"] >= faixa[0]) & (df_filtrado["Total"] <= faixa[1])]
 
 if colunas:
-    df_filtrado = df_filtrado[colunas]
+    df_exibir = df_filtrado[colunas]
+else:
+    df_exibir = df_filtrado
 
 # item 4 - tabela (da pra ordenar clicando no titulo da coluna)
 st.header("4. Tabela")
 st.write("Clique no nome da coluna pra ordenar.")
-st.dataframe(df_filtrado, use_container_width=True)
+st.dataframe(df_exibir, use_container_width=True)
 
 # item 5 - download do que esta filtrado
 st.header("5. Download")
 c1, c2 = st.columns(2)
-c1.download_button("Baixar XLSX", virar_excel(df_filtrado), "tijuca_filtrado.xlsx")
-c2.download_button("Baixar CSV", df_filtrado.to_csv(index=False).encode("utf-8"), "tijuca_filtrado.csv")
+c1.download_button("Baixar XLSX", virar_excel(df_exibir), "tijuca_filtrado.xlsx")
+c2.download_button("Baixar CSV", df_exibir.to_csv(index=False).encode("utf-8"), "tijuca_filtrado.csv")
 
 # item 12 - metricas
 st.header("6. Metricas")
